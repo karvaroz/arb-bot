@@ -1,0 +1,13 @@
+[package]
+name = "scanner"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+arb-core = { path = "../core" }
+market-data = { path = "../market-data" }
+dex-raydium = { path = "../dex-raydium" }
+dex-orca = { path = "../dex-orca" }
+dex-meteora = { path = "../dex-meteora" }
+solana-sdk = { workspace = true }
+petgraph = { workspace = true }

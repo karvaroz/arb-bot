@@ -1,0 +1,15 @@
+# Production overrides, loaded on top of config/default.toml (see
+# apps/cli/src/main.rs::load_settings) — only what actually differs inside
+# the Docker container.
+
+[api]
+# 0.0.0.0, not 127.0.0.1: Caddy reverse-proxies from a separate container
+# (see docker-compose.yml), so the API must accept connections from outside
+# its own network namespace.
+addr = "0.0.0.0:8080"
+# Mounted volume (docker-compose.yml) — survives container restarts/rebuilds.
+db_path = "/data/arb-bot.db"
+# The dashboard's `vite build` output, copied in by the Dockerfile — served
+# same-origin so this one container is the whole app (IMPLEMENTATION_PLAN.md
+# Phase 5 deployment decision), no separate dashboard container/CDN.
+static_dir = "/app/dashboard-dist"

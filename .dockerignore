@@ -1,0 +1,8 @@
+target/
+apps/dashboard/node_modules/
+apps/dashboard/dist/
+data/
+*.db
+.env
+.git/
+config/local.toml

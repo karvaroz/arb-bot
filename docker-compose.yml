@@ -1,0 +1,43 @@
+# Deploys as: `app` (this repo's Docker image, Axum serving API + dashboard)
+# behind `caddy` (TLS termination + Basic Auth). Run on the Oracle Cloud Free
+# Tier VM (IMPLEMENTATION_PLAN.md Phase 5 deployment decision) via
+# `docker compose up -d` after `.env` (HELIUS_API_KEY, DOMAIN,
+# BASIC_AUTH_USER_1/2, BASIC_AUTH_HASH_1/2) is populated on the host.
+
+services:
+  app:
+    image: ghcr.io/${GITHUB_REPOSITORY:-owner/arb-bot}:latest
+    restart: unless-stopped
+    environment:
+      HELIUS_API_KEY: ${HELIUS_API_KEY}
+      RUST_LOG: info
+    volumes:
+      - app-data:/data
+    # Not published directly — only Caddy talks to it, over the compose
+    # network (service name `app`, port 8080, matches config/production.toml).
+    expose:
+      - "8080"
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN}
+      BASIC_AUTH_USER_1: ${BASIC_AUTH_USER_1}
+      BASIC_AUTH_HASH_1: ${BASIC_AUTH_HASH_1}
+      BASIC_AUTH_USER_2: ${BASIC_AUTH_USER_2}
+      BASIC_AUTH_HASH_2: ${BASIC_AUTH_HASH_2}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - app
+
+volumes:
+  app-data:
+  caddy-data:
+  caddy-config:

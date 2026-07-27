@@ -1,0 +1,33 @@
+[rpc]
+url = "https://api.mainnet-beta.solana.com"
+ws = "wss://api.mainnet-beta.solana.com"
+
+[scanner]
+base_tokens = [
+    "So11111111111111111111111111111111111111112", # SOL
+    "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", # USDC
+    "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB", # USDT
+]
+max_hops = 3
+min_profit = 0.15
+
+[research]
+simulation_size = 10
+
+[discovery]
+# Jupiter organicScoreLabel values accepted as "liquid enough to subscribe to".
+# Subscription-budget knob, not a claim about which pools are worth trading —
+# see IMPLEMENTATION_PLAN.md Phase 4.
+accepted_organic_scores = ["high", "medium"]
+# Hard ceiling: refuse to connect past this many accountSubscribe calls rather
+# than repeat the WS-reset-at-85k mistake (see IMPLEMENTATION_PLAN.md Phase 2).
+# Raised from 5000 -> 6000 (2026-07-27): Meteora's cross-bin walk needs 3
+# bin-array subscriptions per pool instead of 1 (active_id +/- 1), pushing real
+# usage to ~5133 — still nowhere near the actual failure point (85k).
+max_subscriptions = 6000
+
+[api]
+# REST/WS server for the research/monitoring dashboard — runs in the same
+# process as the pipeline (IMPLEMENTATION_PLAN.md Phase 5).
+addr = "127.0.0.1:8080"
+db_path = "arb-bot.db"

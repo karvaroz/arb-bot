@@ -1,0 +1,36 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/core",
+    "crates/dex-raydium",
+    "crates/dex-orca",
+    "crates/dex-meteora",
+    "crates/discovery",
+    "crates/market-data",
+    "crates/scanner",
+    "crates/research",
+    "crates/storage",
+    "crates/api",
+    "apps/cli",
+]
+
+[workspace.dependencies]
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+config = "0.14"
+solana-sdk = "2"
+reqwest = { version = "0.12", features = ["json"] }
+anyhow = "1"
+dashmap = "6"
+tokio-tungstenite = { version = "0.24", features = ["native-tls"] }
+bincode = "1"
+futures-util = "0.3"
+base64 = "0.22"
+dotenvy = "0.15"
+petgraph = "0.6"
+rusqlite = { version = "0.31", features = ["bundled"] }
+axum = { version = "0.7", features = ["ws"] }
+tower-http = { version = "0.5", features = ["cors", "fs"] }

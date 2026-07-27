@@ -1,0 +1,17 @@
+# Real access control lives here, not in the app: automatic TLS (Let's
+# Encrypt, via ACME) + HTTP Basic Auth for the 2 known users
+# (IMPLEMENTATION_PLAN.md Phase 5 deployment decision) — no session/JWT/user
+# table to build in Rust for 2 people.
+#
+# {$DOMAIN} and the two password hashes come from the environment (set on
+# the Oracle VM, never committed — see docker-compose.yml). Generate a hash
+# with: docker run --rm caddy:2 caddy hash-password --plaintext '<password>'
+
+{$DOMAIN} {
+	basic_auth {
+		{$BASIC_AUTH_USER_1} {$BASIC_AUTH_HASH_1}
+		{$BASIC_AUTH_USER_2} {$BASIC_AUTH_HASH_2}
+	}
+
+	reverse_proxy app:8080
+}

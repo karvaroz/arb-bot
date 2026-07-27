@@ -1,0 +1,28 @@
+[package]
+name = "arb-bot-cli"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+arb-core = { path = "../../crates/core" }
+discovery = { path = "../../crates/discovery" }
+market-data = { path = "../../crates/market-data" }
+dex-raydium = { path = "../../crates/dex-raydium" }
+dex-orca = { path = "../../crates/dex-orca" }
+dex-meteora = { path = "../../crates/dex-meteora" }
+scanner = { path = "../../crates/scanner" }
+storage = { path = "../../crates/storage" }
+research = { path = "../../crates/research" }
+api = { path = "../../crates/api" }
+axum = { workspace = true }
+solana-sdk = { workspace = true }
+reqwest = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+config = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = "1"
+dotenvy = { workspace = true }
+bincode = { workspace = true }

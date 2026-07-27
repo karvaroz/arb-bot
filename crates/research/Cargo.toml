@@ -1,0 +1,11 @@
+[package]
+name = "research"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+arb-core = { path = "../core" }
+market-data = { path = "../market-data" }
+scanner = { path = "../scanner" }
+solana-sdk = { workspace = true }
+anyhow = { workspace = true }
